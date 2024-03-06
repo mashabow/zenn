@@ -4,6 +4,7 @@ emoji: "💰"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["bugbounty", "money", "hackerone", "tax"]
 published: true
+publication_name: "socialplus"
 ---
 
 こんにちは、mashabow です。先月たまたま EC プラットフォーム [Shopify](https://www.shopify.com/jp) のバグに遭遇し、Bug Bounty Program（脆弱性報奨金制度）を通じて、初めての報奨金をもらいました 🤗（自慢）

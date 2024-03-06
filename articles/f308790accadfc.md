@@ -4,6 +4,7 @@ emoji: "⏳"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["vrt", "storybook", "msw", "regsuit", "react"]
 published: true
+publication_name: "socialplus"
 ---
 
 こんにちは、mashabow です。[昨日](https://zenn.dev/socialplus/articles/c3b2e14b9087bc)から始まった [Social PLUS Tech Blog](https://zenn.dev/p/socialplus) の技術記事 1 本目なのでビビっています 🤗
