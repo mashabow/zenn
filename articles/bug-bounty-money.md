@@ -205,7 +205,7 @@ https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm
 
 https://techoh.net/chart-of-indevidual-tax-rate-2015/#i-4
 
-また、所得税のほかに住民税が 10% かかります。よって仮に所得税率を 10% とすると、所得税・住民税合わせて 8 万円 × (10% + 10%) = **1.6 万円 の税金**を収めることになります。
+また、所得税のほかに住民税が 10% かかります。よって仮に所得税率を 10% とすると、所得税・住民税合わせて 8 万円 × (10% + 10%) = **1.6 万円 の税金**を納めることになります。
 
 ちなみに、副業としてバグハンティングに取り組んでいる場合は、「営利を目的とする継続的行為から生じた所得以外の所得」ではなくなるので、一時所得ではなく[雑所得](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1500.htm)になりそうです。また、本業として行っているプロのバグハンターの場合は[事業所得](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1350.htm)になり、それぞれ計算方法が変わってきます。
 
