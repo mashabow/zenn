@@ -195,3 +195,9 @@ document.body.insertBefore(script2, null); // => スクリプトは実行され�
 ちなみに、GTM とスクリプトの関係を調べている途中で、以下のブログ記事を見つけました。こちらもおもしろいのでおすすめです。
 
 https://techblog.raccoon.ne.jp/archives/1660010900.html
+
+## 追記
+
+弊社が提供しているサードパーティスクリプトの中に、`type="module"` の影響で GTM で動かないものがありました。このスクリプトについて、互換性を保ちつつ、`type="module"` を削除して GTM に対応させました。koyablue さんがこちらの記事にまとめてくれたので、一緒にどうぞ。
+
+https://zenn.dev/socialplus/articles/b10e844a9dfcb7
