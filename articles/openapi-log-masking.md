@@ -1,6 +1,6 @@
 ---
 title: "ログの秘匿情報マスク漏れを OpenAPI で防いだ話"
-emoji: "▪️"
+emoji: "⬛️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["openapi", "logging", "logrocket"]
 published: true
@@ -75,7 +75,7 @@ const masks: readonly {
 
 まず、エンドポイントの指定（`path`）が正規表現ベースなので、書きにくくて読みにくいのです。上の例では簡単なものしか挙げていませんが、実際には複雑なものもありました。ちゃんと書いたつもりでも定義ミスが起こり得ますし、レビューも地味にすり抜けそうです。
 
-細かいところでは、「マスク対象のプロパティがプロパティ名（`keys`）だけで指定されており、階層が考慮されていない」という問題もあります。複数のオブジェクトを寄せ集めたリクエスト／レスポンスボディでは、`name` のようなプロパティが複数個所で出てくるかもしれません。雑な例だとこんな感じです。
+また細かいところでは、「マスク対象のプロパティがプロパティ名（`keys`）だけで指定されており、階層が考慮されていない」という問題もあります。複数のオブジェクトを寄せ集めたリクエスト／レスポンスボディでは、`name` のようなプロパティが複数個所で出てくるかもしれません。雑な例だとこんな感じです。
 
 ```json
 {
@@ -146,7 +146,7 @@ paths:
                   ...
 ```
 
-OpenAPI では、specification extension という標準的な拡張方法が定められています（[ガイド](https://swagger.io/docs/specification/openapi-extensions/)・[仕様](https://spec.openapis.org/oas/v3.2.0.html#specification-extensions)）。`x-` で始まる名前のフィールドがそれで、利用者が自由に定義して使うことができます。今回は、自社で勝手に決めたものだということが明確になるように、社名 `socialplus` を入れて `x-socialplus-sensitive` という名前にしています。
+OpenAPI では、**specification extension** という標準的な拡張方法が定められています（[ガイド](https://swagger.io/docs/specification/openapi-extensions/)・[仕様](https://spec.openapis.org/oas/v3.2.0.html#specification-extensions)）。`x-` で始まる名前のフィールドがそれで、利用者が自由に定義して使うことができます。今回は、自社で勝手に決めたものだということが明確になるように、社名 `socialplus` を入れて `x-socialplus-sensitive` という名前にしています。
 
 
 別の手段として、[`format`](https://spec.openapis.org/oas/v3.2.0.html#data-type-format) フィールドにカスタムの値を使って `format: socialplus-sensitive` のようにする手も考えられますが、`format` を普通の用途で使いたくなったときに困るのでやめました。
@@ -199,7 +199,7 @@ https://github.com/OAI/OpenAPI-Specification/issues/2190
 
 エンドポイントのパスの指定には、OpenAPI の形式 `/foo/{bar}` をそのまま使いました。正規表現だと表現力が過剰です。
 
-また、プロパティの指定には、[JSONPath](https://www.rfc-editor.org/info/rfc9535/) 形式を採用しました。当時は標準化されてなかったんですが、いま調べてみたら2024年に RFC になってたんですね。似たようなものに JSON Pointer がありますが、JSON Pointer だと「配列の全ての要素の中の `name`」のような指定ができず、実用上困ります。JSONPath であれば `$[*].name` のようにワイルドカードで表現できます。
+また、プロパティの指定には、[JSONPath](https://www.rfc-editor.org/info/rfc9535/) 形式を採用しました。当時は標準化されてなかったんですが、いま調べてみたら2024年に RFC になってたんですね。似たようなものに [JSON Pointer](https://www.rfc-editor.org/info/rfc6901/) がありますが、JSON Pointer だと「配列の全ての要素の中の `name`」のような指定ができず、実用上困ります。JSONPath であれば `$[*].name` のようにワイルドカードで表現できます。
 
 > 3. アプリはマスク定義の JSON ファイルをインポートし、そのデータをもとにリクエスト／レスポンスボディのマスク処理を行う
 
@@ -453,10 +453,10 @@ return maskBody(body, logMask.masks.responseBody);
 
 あとは、ログ出力時にこのマスク処理を呼び出せば完了です。
 
-ちなみに、ここで紹介したマスクの仕組みは、もともとセッションリプレイサービス [LogRocket](https://logrocket.com/) のために用意したものです。LogRocket は、サイトを訪問したユーザーの操作を記録してくれるサービスで、操作だけでなく通信内容も記録します。不具合調査などで役立ちますが、秘匿情報は LogRocket には記録したくありません。そこで、上記のマスク処理を [`requestSanitizer` や `responseSanitizer`](https://docs.logrocket.com/reference/network) に組み込みました。
+ちなみに、ここで紹介したマスクの仕組みは、もともとセッションリプレイサービス [LogRocket](https://logrocket.com/) のために用意したものです。LogRocket は、サイトを訪問したユーザーの操作を記録してくれるサービスで、操作だけでなく通信内容も記録します。このログは不具合調査などで役立つのですが、秘匿情報は LogRocket には記録したくありません。そこで、上記のマスク処理を LogRocket の [`requestSanitizer` と `responseSanitizer`](https://docs.logrocket.com/reference/network) に組み込みました。
 
 ![](https://static.zenn.studio/user-upload/f3db0a9bd33e-20260813.png =400x)
-*LogRocket 上における、マスクされた記録の例*
+*LogRocket 上における、マスクされたログの例*
 
 もちろん LogRocket に限らず、他のログ出力でも使えます。
 
@@ -467,3 +467,5 @@ return maskBody(body, logMask.masks.responseBody);
 とはいえ、いくら一元管理したところで、そもそも `x-socialplus-sensitive` をつけ忘れたら元も子もないのは事実です。ただ、最近では AI によるレビューで「`x-socialplus-sensitive` をつけ忘れてます」と指摘してくれますし、リスクはかなり減りました。
 
 また、OpenAPI 上で明示するようになったことをきっかけとして、「何をどこまでマスク対象とすべきか」という基準の明確化が進んだのも、チームに対する副次的な効果としてありました。
+
+これで安心して眠れそうです ☺️
