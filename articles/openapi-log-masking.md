@@ -469,3 +469,9 @@ return maskBody(body, logMask.masks.responseBody);
 また、OpenAPI 上で明示するようになったことをきっかけとして、「何をどこまでマスク対象とすべきか」という基準の明確化が進んだのも、チームに対する副次的な効果としてありました。
 
 これで安心して眠れそうです ☺️
+
+## 関連記事
+
+社内での OpenAPI 活用については、masaki さんのこちらの記事もどうぞ！
+
+https://zenn.dev/socialplus/articles/fd25ada08bf7d9
