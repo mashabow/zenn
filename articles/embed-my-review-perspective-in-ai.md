@@ -3,7 +3,7 @@ title: "自分のレビュー観点を AI に宿せるか？ スキルを作っ�
 emoji: "👥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["claudecode", "ai", "codereview", "github"]
-published: false
+published: true
 publication_name: "socialplus"
 ---
 
